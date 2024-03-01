@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questão 6</title>
+</head>
+<body>
+    <script>
+        var num1 = parseInt(prompt('Digite o primeiro número:'));
+        var op = prompt('Digite a operação desejada? (soma, subtração)');
+        var num2 = parseInt(prompt('Digite o segundo número:'));
+
+
+        const calculo = (num1, num2, op) => {
+            if (op === 'soma') {
+                return document.write(`O resultado é: ${num1 + num2}`);
+            }
+            else if (op === 'subtração'){
+                return document.write(`O resultado é: ${num1 - num2}`);
+            }
+            else {
+                return document.write('Operação inválida');
+            }
+        }
+
+        calculo(num1, num2, op);
+    </script>
+</body>
+</html>

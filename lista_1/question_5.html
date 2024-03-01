@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Questão 5</title>
+    </head>
+    <body>
+        <script>
+        let percentualAuxilio = 0;
+        let codigo = prompt("Digite o código: ");
+        let horasTrabalhadas = parseFloat(prompt("Digite o número de horas trabalhadas no mês: "));
+        let turnoTrabalho = prompt("Turno (M-Matutino, V-Vespertino, N-Noturno): ");
+        let categoria = prompt("Categoria (G-Gerente e F-Funcionário): ");
+        let salarioMin = parseFloat(prompt("Digite o valor do salário mínimo: "));
+        let valorHora = 0;
+    
+    
+        if (categoria.toUpperCase() === "G") {
+            valorHora = salarioMin * 0.04;
+        } 
+        else {
+            if (turnoTrabalho.toUpperCase() === "N") {
+                valorHora = salarioMin * 0.02;
+            } 
+            else {
+                valorHora = salarioMin * 0.01;
+            }
+        }
+    
+        let salarioBase = valorHora * horasTrabalhadas;
+    
+        if (salarioBase <= 800) {
+            percentualAuxilio = 0.25;
+        } 
+        else if (salarioBase <= 1200) {
+            percentualAuxilio = 0.2;
+        } 
+        else {
+            percentualAuxilio = 0.15;
+        }
+    
+        let auxilio = salarioBase * percentualAuxilio;
+        let salarioFinal = salarioBase + auxilio;
+    
+        document.write("Código: " + codigo + "<br>");
+        document.write("Horas trabalhadas: " + horasTrabalhadas + "<br>");
+        document.write("Valor da hora trabalhada: " + valorHora.toFixed(2) + "<br>");
+        document.write("Salário base: " + salarioBase.toFixed(2) + "<br>");
+        document.write("Auxílio alimentação: " + auxilio.toFixed(2) + "<br>");
+        document.write("Salário final: " + salarioFinal.toFixed(2) + "<br>")
+    </script>
+</body>
+</html>

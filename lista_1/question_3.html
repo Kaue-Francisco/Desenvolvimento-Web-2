@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questão 3</title>
+</head>
+<body>
+    <script>
+        var nota;
+        var p_atv = 2;
+        var p_prova = 5;
+        var p_trabalho = 3;
+
+        var nota_atv = prompt("Digite a nota da atividade: ");
+        var nota_prova = prompt("Digite a nota da prova: ");
+        var nota_trabalho = prompt("Digite a nota do trabalho: ");
+        
+        var media = ((p_atv * nota_atv) + (p_prova * nota_prova) + (p_trabalho * nota_trabalho))/ 10;
+        
+        if ( media >= 0 && media < 5) {
+            nota = 'F'
+        }
+        else if ( media >= 5 && media < 6) {
+            nota = 'E'
+        }
+        else if ( media >= 6 && media < 7) {
+            nota = 'D'
+        }
+        else if ( media >= 7 && media < 8) {
+            nota = 'C'
+        }
+        else if ( media >= 8 && media < 9) {
+            nota = 'B'
+        }
+        else if ( media >= 9 && media <= 10) {
+            nota = 'A'
+        }
+        else {
+            nota = 'Nota inválida'
+        }
+
+        document.write(`A média do aluno é = ${media.toFixed(1)} e a sua classificação é ${nota}`);
+
+    </script>
+</body>
+</html>
