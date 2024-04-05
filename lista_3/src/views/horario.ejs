@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barbearia</title>
+    <style>
+        /* Estilos CSS podem ser adicionados aqui */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        nav {
+            background-color: #333;
+            color: #fff;
+            padding: 15px;
+            text-align: center;
+            
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        img {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+            height: auto;
+        }
+        .container {
+            margin: 0 auto;
+            text-align: center;
+            margin-top: 20px;
+            max-width: 70%;
+        }
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/horario">Marcar Horário</a>
+        <a href="/agendamentos">Agendamentos</a>
+    </nav>
+    
+    <div class="container">
+        <h2>Marcar Horário</h2>
+        <p>Aqui você pode marcar seu horário para um corte de cabelo ou barba.</p>
+        
+        <form action="/agendar" method="post">
+            <label for="nome">Nome:</label><br>
+            <input type="text" id="nome" name="nome"><br>
+            <label for="email">E-mail:</label><br>
+            <input type="email" id="email" name="email"><br>
+            <label for="telefone">Telefone:</label><br>
+            <input type="tel" id="telefone" name="telefone"><br>
+            <label for="data">Data:</label><br>
+            <input type="date" id="data_agenda" name="data_agenda"><br>
+            <label for="horario">Horário:</label><br>
+            <input type="time" id="horario" name="horario"><br><br>
+            <input type="submit" value="Agendar">
+        </form>
+    </div>
+    <footer>
+        <p>Endereço: Rua da Barbearia, 123 - Cidade</p>
+        <p>Telefone: (00) 1234-5678</p>
+        <p>&copy; 2024 Barbearia</p>
+    </footer>
+</body>
+</html>

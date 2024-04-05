@@ -1,0 +1,9 @@
+DROP DATABASE IF EXISTS test;
+CREATE DATABASE test;
+USE test;
+
+CREATE TABLE pessoa (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255),
+    idade INT
+);
