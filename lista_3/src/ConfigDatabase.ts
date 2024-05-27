@@ -7,8 +7,31 @@ export const conn = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: '',
-  database: 'test',
+  database: 'escola',
 });
+
+export const insertData = async () => {
+  await conn.query(`INSERT INTO Sala (Nome_Sala, Localizacao) VALUES
+  ('Sala 1', 'Local 1'),
+  ('Sala 2', 'Local 2'),
+  ('Sala 3', 'Local 3'),
+  ('Sala 4', 'Local 4');
+  `);
+
+  await conn.query(`INSERT INTO Equipamento (Nome_Equipamento, Descricao) VALUES
+  ('Equipamento 1', 'Descricao 1'),
+  ('Equipamento 2', 'Descricao 2'),
+  ('Equipamento 3', 'Descricao 3'),
+  ('Equipamento 4', 'Descricao 4');
+  `);
+
+  await conn.query(`INSERT INTO Sala_Equipamento (ID_Sala, ID_Equipamento, Quantidade) VALUES
+  (1, 1, 10),
+  (2, 2, 20),
+  (3, 3, 30),
+  (4, 4, 40);
+  `);
+}
 
 export const connectionDb = async () => {
   /**
