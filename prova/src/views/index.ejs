@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Equipamentos</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <input type="text" id="room-input" placeholder="Digite o nome da sala">
+    <button id="list-equipment">Listar Equipamentos</button>
+    <button id="count-equipment">Contar Equipamentos</button>
+
+    <div id="equipment-list"></div>
+    <div id="equipment-count"></div>
+
+    <script>
+        $(document).ready(function() {
+            $('#list-equipment').click(function() {
+                var room = $('#room-input').val();
+                $.get('/api/equipment?room=' + room, function(data) {
+                    $('#equipment-list').html(JSON.stringify(data));
+                });
+            });
+
+            $('#count-equipment').click(function() {
+                var room = $('#room-input').val();
+                $.get('/api/equipment/count?room=' + room, function(data) {
+                    $('#equipment-count').html('Total de equipamentos: ' + data.count);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
