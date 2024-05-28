@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,7 +22,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex items-center">
-                    <a href="/"><h1 class="text-white">Mercado</h1></a>
+                    <a href="/"><h1 class="text-white text-xl font-bold">Mercado</h1></a>
                 </div>
                 <div class="flex">
                     <a href="/produtos" style="margin-right: 15px;" class="text-white bold-on-hover">Produtos</a>
@@ -32,12 +32,31 @@
         </div>
     </nav>
 
-    <main>
-        <img src="https://images.unsplash.com/photo-1578916171728-46686eac8d58?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Fullscreen Image" class="fullscreen-image">
-        <div class="text-center text-white" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 50px; font-weight: bold; text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);">
-            <h1>Gerenciamento</h1>
+    <main class="min-h-screen bg-gray-100 p-8">
+        <h1 class="text-3xl font-bold mb-8">Produtos</h1>
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+                <thead class="bg-gray-800 text-white">
+                    <tr>
+                        <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">
+                            Nome
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">
+                            Preço
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                    <% data.forEach(function(item) { %>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"><%= item.Nome %></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><%= item.Preco %></td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
         </div>
-    </main>
+    </main>    
 
     <footer class="bg-gray-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -48,6 +67,5 @@
             </div>
         </div>
     </footer>
-
 </body>
 </html>

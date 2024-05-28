@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = "mysql://root:@localhost:3306/ecommerce"
+}
+
+model Produto {
+  ProdutoID  Int      @id @default(autoincrement())
+  Nome       String
+  Preco      Float
+  ItensVendidos ItensVendidos[]
+}
+
+model Cliente {
+  ClienteID  Int      @id @default(autoincrement())
+  Nome       String
+  Email      String
+  Telefone   String?
+  Endereco   String?
+  Vendas     Venda[]
+}
+
+model Venda {
+  VendaID    Int      @id @default(autoincrement())
+  ClienteID  Int
+  DataVenda  DateTime
+  ValorTotal Float
+  Cliente    Cliente  @relation(fields: [ClienteID], references: [ClienteID])
+  ItensVendidos ItensVendidos[]
+}
+
+model ItensVendidos {
+  ItemID       Int      @id @default(autoincrement())
+  VendaID      Int
+  ProdutoID    Int
+  Quantidade   Int
+  PrecoUnitario Float
+  Venda        Venda    @relation(fields: [VendaID], references: [VendaID])
+  Produto      Produto  @relation(fields: [ProdutoID], references: [ProdutoID])
+}

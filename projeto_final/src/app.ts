@@ -1,4 +1,5 @@
 import { Express, Request, Response } from 'express';
+import { gerarDados, pegarProdutos, buscarVendas } from './server';
 import bodyParser from 'body-parser';
 import * as path from 'path';
 
@@ -11,13 +12,23 @@ const PORT: number = 3000;
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-app.use(bodyParser.urlencoded({ extended: true}))
+app.use(bodyParser.urlencoded({ extended: true}));
 
-
-app.get('/', (req: Request, res: Response) => {
+app.get('/', async (req: Request, res: Response) => {
     res.render('index');
-})
+});
 
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`)
-})
+app.get('/produtos', async (req: Request, res: Response) => {
+    const produtos = await pegarProdutos();
+    res.render('produtos', { data: produtos });
+});
+
+app.get('/vendas', async (req: Request, res: Response) => {
+    const vendas = await buscarVendas();
+    res.render('vendas', { data: vendas });
+});
+
+app.listen(PORT, async () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+    await gerarDados();
+});

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mercado</title>
+    <link rel="stylesheet" href="./index.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .bold-on-hover:hover {
+            font-weight: bold;
+            font-size: 15px;
+        }
+        .fullscreen-image {
+            width: 100%;
+            height: 90vh;
+        }
+    </style>
+</head>
+<body>
+    <nav class="bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <a href="/"><h1 class="text-white text-xl font-bold">Mercado</h1></a>
+                </div>
+                <div class="flex">
+                    <a href="/produtos" style="margin-right: 15px;" class="text-white bold-on-hover">Produtos</a>
+                    <a href="/vendas" class="text-white bold-on-hover">Gerenciamento</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="min-h-screen bg-gray-100 p-8">
+        <h1 class="text-3xl font-bold mb-8">Vendas</h1>
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+                <thead class="bg-gray-800 text-white">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">Cliente</th>
+                        <th class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">Data da Venda</th>
+                        <th class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">Itens</th>
+                        <th class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">Valor Total</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                    <% data.forEach(venda => { %>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 whitespace-nowrap"><%= venda.Cliente.Nome %></td>
+                            <td class="px-6 py-4 whitespace-nowrap"><%= new Date(venda.DataVenda).toLocaleDateString() %></td>
+                            <td class="px-6 py-4">
+                                <ul class="list-disc list-inside">
+                                    <% venda.ItensVendidos.forEach(item => { %>
+                                        <li><%= item.Produto.Nome %> - Quantidade: <%= item.Quantidade %> - Preço Unitário: <%= item.PrecoUnitario %></li>
+                                    <% }) %>
+                                </ul>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap"><%= venda.ValorTotal %></td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-center h-16">
+                <div class="flex items-center">
+                    <h1 class="text-white">Todos os direitos reservados &copy; <script>document.write(new Date().getFullYear())</script></h1>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
