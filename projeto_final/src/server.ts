@@ -60,26 +60,3 @@ export async function gerarDados() {
         ]
     });
 }
-
-export async function pegarProdutos() {
-    return prisma.produto.findMany();
-}
-
-export async function buscarVendas() {
-    const vendas = await prisma.venda.findMany({
-        include: {
-            Cliente: true, // Inclui dados do cliente
-            ItensVendidos: {
-                include: {
-                    Produto: true, // Inclui dados do produto
-                },
-            },
-        },
-    });
-
-    return vendas;
-}
-
-export async function buscarClientes() {
-    return prisma.cliente.findMany();
-}
