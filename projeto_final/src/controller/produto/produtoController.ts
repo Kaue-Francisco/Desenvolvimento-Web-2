@@ -1,4 +1,5 @@
 import { ProdutoService } from "../../service/produto/produtoService";
+import { produtoType } from "../../interfaces/produtoInterface";
 
 const produtoService = new ProdutoService();
 
@@ -13,6 +14,15 @@ export class ProdutoController {
             } else {
                 return produtos
             }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async adicionarProduto(produto: produtoType) {
+
+        try {
+            await produtoService.adicionarProduto(produto);
         } catch (error) {
             console.error(error);
         }

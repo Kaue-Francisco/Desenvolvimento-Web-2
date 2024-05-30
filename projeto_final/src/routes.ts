@@ -10,35 +10,43 @@ const vendasController = new VendasController();
 const router = Router();
 
 router.get('/', async (req: Request, res: Response) => {
-    res.render('index');
+    res.render('home/index');
 });
 
 router.get('/produtos', async (req: Request, res: Response) => {
     const produtos = await produtoController.pegarProdutos();
-    res.render('produtos', { data: produtos });
+    res.render('produtos/produtos', { data: produtos });
 });
 
 router.get('/vendas', async (req: Request, res: Response) => {
     const vendas = await vendasController.buscarVendas();
-    res.render('vendas', { data: vendas });
+    res.render('vendas/vendas', { data: vendas });
 });
 
 router.get('/clientes', async (req: Request, res: Response) => {
     const clientes = await clienteController.buscarClientes();
-    res.render('clientes', { data: clientes });
+    res.render('clientes/clientes', { data: clientes });
 });
 
-// router.post('/adicionar_produto', async (req: Request, res: Response) => {
-//     const produto = req.body;
-//     await adicionarProduto(produto);
-//     res.redirect('/produtos');
-// });
+router.route('/adicionar_produto')
+    .get((req: Request, res: Response) => {
+        res.render('produtos/adicionar_produto');
+    })
+    .post(async (req: Request, res: Response) => {
+        const produto = req.body;
+        await produtoController.adicionarProduto(produto);
+        res.redirect('/produtos');
+    });
 
-// router.post('/adicionar_cliente', async (req: Request, res: Response) => {
-//     const cliente = req.body;
-//     await adicionarCliente(cliente);
-//     res.redirect('/clientes');
-// });
+router.route('/adicionar_cliente')
+    .get((req: Request, res: Response) => {
+        res.render('clientes/adicionar_cliente');
+    })
+    .post(async (req: Request, res: Response) => {
+        const cliente = req.body;
+        await clienteController.adicionarCliente(cliente);
+        res.redirect('/clientes');
+    });
 
 // router.post('/adicionar_venda', async (req: Request, res: Response) => {
 //     const venda = req.body;
