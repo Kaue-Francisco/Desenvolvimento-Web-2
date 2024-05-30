@@ -2,12 +2,17 @@ import { Router, Request, Response } from 'express';
 import { ClienteController } from './controller/cliente/clienteController';
 import { ProdutoController } from './controller/produto/produtoController';
 import { VendasController } from './controller/vendas/vendasController';
+import { VendaType } from './interfaces/vendasInterface';
+
+//////////////////////////////////////////////////////////////////////////////
 
 const clienteController = new ClienteController();
 const produtoController = new ProdutoController();
 const vendasController = new VendasController();
 
 const router = Router();
+
+//////////////////////////////////////////////////////////////////////////////
 
 router.get('/', async (req: Request, res: Response) => {
     res.render('home/home');
@@ -54,8 +59,21 @@ router.route('/realizar_venda')
         const clientes = await clienteController.buscarClientes();
         res.render('vendas/realizar_venda', { produtos: produtos, clientes: clientes });
     })
+
     .post(async (req: Request, res: Response) => {
-        const venda = req.body;
+        // Inicializando a variável 'venda' com as propriedades cliente e produtos
+        let venda: VendaType = { cliente: 0, produtos: [] }; 
+        const data = req.body;
+        
+        // Convertendo os valores para inteiros
+        venda.cliente = parseInt(data.cliente);
+        for (let i = 0; i < data.produtos.length; i++) {
+            venda.produtos.push({
+                ProdutoID: parseInt(data.produtos[i]),
+                Quantidade: parseInt(data.quantidades[i]),
+            });
+        }
+
         await vendasController.realizarVenda(venda);
         res.redirect('/vendas');
     });

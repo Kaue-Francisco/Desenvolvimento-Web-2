@@ -3,12 +3,13 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export async function gerarDados() {
-    await prisma.itensVendidos.deleteMany({});
-    await prisma.venda.deleteMany({});
-    await prisma.produto.deleteMany({});
-    await prisma.cliente.deleteMany({});
-
-    // Inserir produtos de exemplo
+    const itensVendidosCount = await prisma.itensVendidos.count();
+    const vendaCount = await prisma.venda.count();
+    const clienteCount = await prisma.cliente.count();
+    const produtoCount = await prisma.produto.count();
+    
+    if (itensVendidosCount <= 0 && vendaCount <= 0 && clienteCount <= 0 && produtoCount <= 0) {
+        // Inserir produtos de exemplo
     const produtos = await prisma.produto.createMany({
         data: [
             { Nome: 'Arroz', Preco: 20.00 },
@@ -59,4 +60,5 @@ export async function gerarDados() {
             { VendaID: venda4.VendaID, ProdutoID: produto3.ProdutoID, Quantidade: 2, PrecoUnitario: 5.00 }
         ]
     });
+    }
 }

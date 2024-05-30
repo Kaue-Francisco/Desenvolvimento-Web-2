@@ -27,4 +27,14 @@ export class ProdutoController {
             console.error(error);
         }
     }
+
+    async pegarPrecoProduto(produtoID: number) {
+        try {
+            const preco = await produtoService.pegarPrecoProduto(produtoID);
+            return preco;
+        } catch (error) {
+            console.error(error);
+            return 0
+        }
+    }
 }

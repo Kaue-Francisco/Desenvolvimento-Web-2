@@ -20,4 +20,19 @@ export class ProdutoService {
             }
         });
     }
+
+    async pegarPrecoProduto(produtoID: number) {
+        // Retorna o preço de um produto.
+        const produto = await prisma.produto.findUnique({
+            where: {
+                ProdutoID: produtoID
+            }
+        });
+
+        if (!produto) {
+            return 0;
+        }
+
+        return produto.Preco;
+    }
 }

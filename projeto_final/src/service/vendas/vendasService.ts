@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { vendaType } from '../../interfaces/vendasInterface'
+import { VendaType } from '../../interfaces/vendasInterface'
 
 const prisma = new PrismaClient();
 
@@ -20,7 +20,21 @@ export class VendasService {
         return vendas;
     }
 
-    async realizarVenda(venda: vendaType) {
+    async realizarVenda(venda: VendaType) {
         
+        const vendaRealizada = await prisma.venda.create({
+            data: {
+                ClienteID: venda.cliente,
+                DataVenda: new Date(),
+                ValorTotal: venda.total ?? 0,
+                ItensVendidos: {
+                    create: venda.produtos.map((item) => ({
+                        ProdutoID: item.ProdutoID,
+                        Quantidade: item.Quantidade,
+                        PrecoUnitario: item.PrecoUnitario ?? 0,
+                    })),
+                },
+            }
+        });
     }
 }
