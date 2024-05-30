@@ -1,0 +1,63 @@
+<!-- Realizar uma Venda -->
+<main class="min-h-screen bg-gray-100 p-8 flex items-center justify-center">
+    <div class="w-full max-w-lg">
+        <h2 class="text-2xl font-bold mb-6 text-center">Nova Venda</h2>
+        <form action="/realizar_venda" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <div class="mb-4">
+                <label for="cliente" class="block text-gray-700 text-sm font-bold mb-2">Selecione o Cliente:</label>
+                <select id="cliente" name="cliente" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                    <option value="">Selecione um cliente</option>
+                    <!-- Aqui você pode adicionar opções para todos os clientes disponíveis -->
+                    <% clientes.forEach(cliente => { %>
+                        <option value="<%= cliente.ClienteID %>"><%= cliente.Nome %></option>
+                    <% }); %>
+                </select>
+            </div>
+            <!-- Campo para produtos e quantidades -->
+            <div id="produtos">
+                <div class="mb-4">
+                    <label for="produto" class="block text-gray-700 text-sm font-bold mb-2">Produto:</label>
+                    <select name="produtos[]" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                        <option value="">Selecione um produto</option>
+                        <!-- Aqui você pode adicionar opções para todos os produtos disponíveis -->
+                        <% produtos.forEach(produto => { %>
+                            <option value="<%= produto.ProdutoID %>"><%= produto.Nome %></option>
+                        <% }); %>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label for="quantidade" class="block text-gray-700 text-sm font-bold mb-2">Quantidade:</label>
+                    <input type="number" name="quantidades[]" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                </div>
+            </div>
+            <div class="flex justify-between">
+                <button type="button" onclick="adicionarProduto()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Adicionar Produto</button>
+                <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Finalizar Compra</button>
+            </div>
+        </form>
+    </div>
+</main>
+
+<script>
+    function adicionarProduto() {
+        const produtosDiv = document.getElementById('produtos');
+        const novoProdutoDiv = document.createElement('div');
+        novoProdutoDiv.innerHTML = `
+            <div class="mb-4">
+                <label for="produto" class="block text-gray-700 text-sm font-bold mb-2">Produto:</label>
+                <select name="produtos[]" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                    <option value="">Selecione um produto</option>
+                    <!-- Aqui você pode adicionar opções para todos os produtos disponíveis -->
+                    <% produtos.forEach(produto => { %>
+                        <option value="<%= produto.ProdutoID %>"><%= produto.Nome %></option>
+                    <% }); %>
+                </select>
+            </div>
+            <div class="mb-4">
+                <label for="quantidade" class="block text-gray-700 text-sm font-bold mb-2">Quantidade:</label>
+                <input type="number" name="quantidades[]" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+            </div>
+        `;
+        produtosDiv.appendChild(novoProdutoDiv);
+    }
+</script>

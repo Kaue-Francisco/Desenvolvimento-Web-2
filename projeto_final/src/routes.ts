@@ -10,7 +10,7 @@ const vendasController = new VendasController();
 const router = Router();
 
 router.get('/', async (req: Request, res: Response) => {
-    res.render('home/index');
+    res.render('home/home');
 });
 
 router.get('/produtos', async (req: Request, res: Response) => {
@@ -48,11 +48,18 @@ router.route('/adicionar_cliente')
         res.redirect('/clientes');
     });
 
-// router.post('/adicionar_venda', async (req: Request, res: Response) => {
-//     const venda = req.body;
-//     await adicionarVenda(venda);
-//     res.redirect('/vendas');
-// });
+router.route('/realizar_venda')
+    .get(async (req: Request, res: Response) => {
+        const produtos = await produtoController.pegarProdutos();
+        const clientes = await clienteController.buscarClientes();
+        res.render('vendas/realizar_venda', { produtos: produtos, clientes: clientes });
+    })
+    .post(async (req: Request, res: Response) => {
+        const venda = req.body;
+        await vendasController.realizarVenda(venda);
+        res.redirect('/vendas');
+    });
+
 
 // router.delete('/deletar_produto/:id', async (req: Request, res: Response) => {
 //     const { id } = req.params;

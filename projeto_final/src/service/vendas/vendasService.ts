@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import { vendaType } from '../../interfaces/vendasInterface'
 
 const prisma = new PrismaClient();
 
@@ -19,4 +20,7 @@ export class VendasService {
         return vendas;
     }
 
+    async realizarVenda(venda: vendaType) {
+        
+    }
 }

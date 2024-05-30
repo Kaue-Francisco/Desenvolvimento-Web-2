@@ -18,4 +18,11 @@ export class VendasController {
         }
     }
     
+    async realizarVenda(venda: any) {
+        try {
+            await vendasService.realizarVenda(venda);
+        } catch (error) {
+            console.error(error);
+        }
+    }
 }

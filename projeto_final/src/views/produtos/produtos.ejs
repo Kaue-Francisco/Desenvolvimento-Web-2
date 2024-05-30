@@ -1,86 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mercado</title>
-    <link rel="stylesheet" href="./index.css">
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <style>
-        .bold-on-hover:hover {
-            font-weight: bold;
-            font-size: 15px;
-        }
-        .fullscreen-image {
-            width: 100%;
-            height: 90vh;
-        }
-    </style>
-</head>
-<body>
-    <nav class="bg-gray-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <div class="flex items-center">
-                    <a href="/"><h1 class="text-white text-xl">Mercado</h1></a>
-                </div>
-                <div class="flex">
-                    <a href="/produtos" style="margin-right: 15px;" class="text-white bold-on-hover">Produtos</a>
-                    <a href="/vendas" style="margin-right: 15px;" class="text-white bold-on-hover">Gerenciamento</a>
-                    <a href="/clientes" class="text-white bold-on-hover">Clientes</a>
-                </div>
-            </div>
+<!-- Listagem de Produtos -->
+<main class="min-h-screen bg-gray-100 p-8">
+    <div class="flex justify-between items-center mb-8">
+        <h1 class="text-3xl font-bold">Produtos</h1>
+        <div class="flex space-x-4">
+            <a href="/adicionar_produto">
+                <button class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700">
+                    Adicionar Produto
+                </button>
+            </a>
+            <a href="/deletar_cliente">
+                <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700">
+                    Deletar Produto
+                </button>
+            </a>
         </div>
-    </nav>
-
-    <main class="min-h-screen bg-gray-100 p-8">
-        <div class="flex justify-between items-center mb-8">
-            <h1 class="text-3xl font-bold">Produtos</h1>
-            <div class="flex space-x-4">
-                <a href="/adicionar_produto">
-                    <button class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700">
-                        Adicionar Produto
-                    </button>
-                </a>
-                <a href="/deletar_cliente">
-                    <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700">
-                        Deletar Produto
-                    </button>
-                </a>
-            </div>
-        </div>
-        <div class="overflow-x-auto">
-            <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
-                <thead class="bg-gray-800 text-white">
-                    <tr>
-                        <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">
-                            Nome
-                        </th>
-                        <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">
-                            Preço
-                        </th>
+    </div>
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+            <thead class="bg-gray-800 text-white">
+                <tr>
+                    <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">
+                        Nome
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">
+                        Preço
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+                <% data.forEach(function(item) { %>
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"><%= item.Nome %></td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">R$ <%= item.Preco %></td>
                     </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-200">
-                    <% data.forEach(function(item) { %>
-                        <tr class="hover:bg-gray-50">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"><%= item.Nome %></td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">R$ <%= item.Preco %></td>
-                        </tr>
-                    <% }); %>
-                </tbody>
-            </table>
-        </div>
-    </main>    
-
-    <footer class="bg-gray-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-center h-16">
-                <div class="flex items-center">
-                    <h1 class="text-white">Todos os direitos reservados &copy; <script>document.write(new Date().getFullYear())</script></h1>
-                </div>
-            </div>
-        </div>
-    </footer>
-</body>
-</html>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+</main>
