@@ -79,3 +79,7 @@ export async function buscarVendas() {
 
     return vendas;
 }
+
+export async function buscarClientes() {
+    return prisma.cliente.findMany();
+}

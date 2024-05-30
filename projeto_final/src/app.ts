@@ -1,5 +1,5 @@
 import { Express, Request, Response } from 'express';
-import { gerarDados, pegarProdutos, buscarVendas } from './server';
+import { gerarDados, pegarProdutos, buscarVendas, buscarClientes } from './server';
 import bodyParser from 'body-parser';
 import * as path from 'path';
 
@@ -24,6 +24,26 @@ app.get('/produtos', async (req: Request, res: Response) => {
 });
 
 app.get('/vendas', async (req: Request, res: Response) => {
+    const vendas = await buscarVendas();
+    res.render('vendas', { data: vendas });
+});
+
+app.get('/clientes', async (req: Request, res: Response) => {
+    const clientes = await buscarClientes();
+    res.render('clientes', { data: clientes });
+});
+
+app.get('/cadastrar_clientes', async (req: Request, res: Response) => {
+    const vendas = await buscarVendas();
+    res.render('vendas', { data: vendas });
+});
+
+app.get('/realizar_venda', async (req: Request, res: Response) => {
+    const vendas = await buscarVendas();
+    res.render('vendas', { data: vendas });
+});
+
+app.get('/adicionar_produto', async (req: Request, res: Response) => {
     const vendas = await buscarVendas();
     res.render('vendas', { data: vendas });
 });

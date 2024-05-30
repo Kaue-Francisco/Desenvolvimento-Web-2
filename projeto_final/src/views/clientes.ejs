@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,16 +35,16 @@
 
     <main class="min-h-screen bg-gray-100 p-8">
         <div class="flex justify-between items-center mb-8">
-            <h1 class="text-3xl font-bold">Produtos</h1>
+            <h1 class="text-3xl font-bold">Vendas</h1>
             <div class="flex space-x-4">
-                <a href="/adicionar_produto">
+                <a href="/cadastrar_cliente">
                     <button class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700">
-                        Adicionar Produto
+                        Cadastrar Cliente
                     </button>
                 </a>
                 <a href="/deletar_cliente">
                     <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700">
-                        Deletar Produto
+                        Deletar Cliente
                     </button>
                 </a>
             </div>
@@ -53,25 +53,25 @@
             <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
                 <thead class="bg-gray-800 text-white">
                     <tr>
-                        <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">
-                            Nome
-                        </th>
-                        <th scope="col" class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">
-                            Preço
-                        </th>
+                        <th class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">Nome</th>
+                        <th class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">Email</th>
+                        <th class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">Telefone</th>
+                        <th class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">Endereço</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200">
-                    <% data.forEach(function(item) { %>
+                    <% data.forEach(cliente => { %>
                         <tr class="hover:bg-gray-50">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"><%= item.Nome %></td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">R$ <%= item.Preco %></td>
+                            <td class="px-6 py-4 whitespace-nowrap"><%= cliente.Nome %></td>
+                            <td class="px-6 py-4 whitespace-nowrap"><%= cliente.Email %></td>
+                            <td class="px-6 py-4 whitespace-nowrap"><%= cliente.Telefone%></td>
+                            <td class="px-6 py-4 whitespace-nowrap"><%= cliente.Endereco %></td>
                         </tr>
-                    <% }); %>
+                    <% }) %>
                 </tbody>
             </table>
         </div>
-    </main>    
+    </main>
 
     <footer class="bg-gray-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

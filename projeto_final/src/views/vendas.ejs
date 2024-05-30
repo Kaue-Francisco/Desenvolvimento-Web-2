@@ -26,7 +26,8 @@
                 </div>
                 <div class="flex">
                     <a href="/produtos" style="margin-right: 15px;" class="text-white bold-on-hover">Produtos</a>
-                    <a href="/vendas" class="text-white bold-on-hover">Gerenciamento</a>
+                    <a href="/vendas" style="margin-right: 15px;" class="text-white bold-on-hover">Gerenciamento</a>
+                    <a href="/clientes" class="text-white bold-on-hover">Clientes</a>
                 </div>
             </div>
         </div>
@@ -35,11 +36,18 @@
     <main class="min-h-screen bg-gray-100 p-8">
         <div class="flex justify-between items-center mb-8">
             <h1 class="text-3xl font-bold">Vendas</h1>
-            <a href="/realizar_venda">
-                <button class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700">
-                    Realizar uma venda
-                </button>
-            </a>
+            <div class="flex space-x-4">
+                <a href="/realizar_venda">
+                    <button class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700">
+                        Realizar uma venda
+                    </button>
+                </a>
+                <a href="/deletar_cliente">
+                    <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700">
+                        Deletar Venda
+                    </button>
+                </a>
+            </div>
         </div>
         <div class="overflow-x-auto">
             <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
@@ -59,11 +67,11 @@
                             <td class="px-6 py-4">
                                 <ul class="list-disc list-inside">
                                     <% venda.ItensVendidos.forEach(item => { %>
-                                        <li><%= item.Produto.Nome %> - Quantidade: <%= item.Quantidade %> - Preço Unitário: <%= item.PrecoUnitario %></li>
+                                        <li><%= item.Produto.Nome %> - Quantidade: <%= item.Quantidade %> - Preço Unitário: R$<%= item.PrecoUnitario %></li>
                                     <% }) %>
                                 </ul>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap"><%= venda.ValorTotal %></td>
+                            <td class="px-6 py-4 whitespace-nowrap">R$ <%= venda.ValorTotal %></td>
                         </tr>
                     <% }) %>
                 </tbody>
