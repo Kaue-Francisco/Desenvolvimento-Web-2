@@ -20,13 +20,17 @@ export class ProdutoController {
     }
 
     async adicionarProduto(produto: produtoType) {
-
         try {
             await produtoService.adicionarProduto(produto);
-        } catch (error) {
-            console.error(error);
+        } catch (error: any) { // Add type annotation to 'error' parameter
+            if (error.code === 'P2002' && error.meta?.target === 'Produto_Nome_key') {
+                console.log('Produto com mesmo nome já cadastrado:', produto.Nome);
+            } else {
+                console.log('Erro ao adicionar produto', error);
+            }
         }
     }
+    
 
     async pegarPrecoProduto(produtoID: number) {
         try {

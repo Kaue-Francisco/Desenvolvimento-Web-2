@@ -37,4 +37,23 @@ export class VendasService {
             }
         });
     }
+
+    async deletarVenda(vendaID: number) {
+        try {
+            await prisma.itensVendidos.deleteMany({
+                where: {
+                    VendaID: vendaID
+                }
+            });
+
+            return await prisma.venda.delete({
+                where: {
+                    VendaID: vendaID
+                }
+            });
+        } catch (error) {
+            console.error('Erro ao deletar venda:', error);
+            throw error;
+        }
+    }
 }

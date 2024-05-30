@@ -39,4 +39,12 @@ export class VendasController {
 
         return total;
     }
+
+    async deletarVenda(vendaID: number) {
+        try {
+            await vendasService.deletarVenda(vendaID);
+        } catch (error) {
+            console.error(error);
+        }
+    }
 }

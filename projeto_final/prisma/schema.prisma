@@ -9,7 +9,7 @@ datasource db {
 
 model Produto {
   ProdutoID  Int      @id @default(autoincrement())
-  Nome       String
+  Nome       String   @unique
   Preco      Float
   ItensVendidos ItensVendidos[]
 }
@@ -17,8 +17,8 @@ model Produto {
 model Cliente {
   ClienteID  Int      @id @default(autoincrement())
   Nome       String
-  Email      String
-  Telefone   String?
+  Email      String  @unique
+  Telefone   String? @unique
   Endereco   String?
   Vendas     Venda[]
 }
