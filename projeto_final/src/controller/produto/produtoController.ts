@@ -8,11 +8,10 @@ export class ProdutoController {
     async pegarProdutos() {
         try {
             const produtos = await produtoService.pegarProdutos();
-            
             if (produtos.length === 0) {
-                return 'Nenhum produto cadastrado'                
+                return 'Nenhum produto cadastrado';
             } else {
-                return produtos
+                return produtos;
             }
         } catch (error) {
             console.error(error);
@@ -22,7 +21,7 @@ export class ProdutoController {
     async adicionarProduto(produto: produtoType) {
         try {
             await produtoService.adicionarProduto(produto);
-        } catch (error: any) { // Add type annotation to 'error' parameter
+        } catch (error: any) { 
             if (error.code === 'P2002' && error.meta?.target === 'Produto_Nome_key') {
                 console.log('Produto com mesmo nome já cadastrado:', produto.Nome);
             } else {
@@ -30,7 +29,6 @@ export class ProdutoController {
             }
         }
     }
-    
 
     async pegarPrecoProduto(produtoID: number) {
         try {
@@ -38,7 +36,15 @@ export class ProdutoController {
             return preco;
         } catch (error) {
             console.error(error);
-            return 0
+            return 0;
+        }
+    }
+
+    async deletarProduto(produtoID: number) {
+        try {
+            await produtoService.deletarProduto(produtoID);
+        } catch (error) {
+            console.error(error);
         }
     }
 }
