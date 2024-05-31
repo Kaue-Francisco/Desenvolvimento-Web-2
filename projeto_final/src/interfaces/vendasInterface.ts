@@ -9,3 +9,10 @@ export interface VendaType {
     produtos: VendaItemType[];
     total?: number; // Campo opcional para armazenar o preço total
 }
+export interface AtualizarVenda {
+    ClienteID: number;
+    DataVenda: string;
+    itens: { ProdutoID: number; Quantidade: number }[];
+    VendaID: number;
+    ValorTotal?: number;
+}

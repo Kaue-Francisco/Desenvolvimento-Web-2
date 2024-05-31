@@ -1,0 +1,94 @@
+<main style="min-height: 92vh;" class="bg-gray-100 p-8 flex items-center justify-center">
+    <div class="w-full max-w-2xl">
+        <h2 class="text-2xl font-bold mb-6 text-center">Editar Venda</h2>
+        <form action="/atualizarVenda/<%= venda.VendaID %>" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <!-- Campo para selecionar o Cliente -->
+            <div class="mb-4">
+                <label for="ClienteID" class="block text-gray-700 text-sm font-bold mb-2">Cliente da Venda:</label>
+                <select name="ClienteID" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                    <option value="<%= venda.Cliente.ClienteID %>"><%= venda.Cliente.Nome %></option>
+                    <% clientes.forEach(cliente => { %>
+                        <% if (cliente.ClienteID !== venda.Cliente.ClienteID) { %>
+                            <option value="<%= cliente.ClienteID %>"><%= cliente.Nome %></option>
+                        <% } %>
+                    <% }); %>
+                </select>
+            </div>
+            <!-- Campo para Data da Venda -->
+            <div class="mb-4">
+                <label for="DataVenda" class="block text-gray-700 text-sm font-bold mb-2">Data da Venda:</label>
+                <input type="date" id="DataVenda" name="DataVenda" value="<%= new Date(venda.DataVenda).toISOString().split('T')[0] %>" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+            </div>
+            <!-- Campos para Itens Vendidos -->
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Itens Vendidos:</label>
+                <div id="itens-container">
+                    <% venda.ItensVendidos.forEach((item, index) => { %>
+                        <div class="mb-4 p-4 border rounded shadow-sm bg-gray-50 item-vendido">
+                            <div class="mb-2">
+                                <label class="block text-gray-700 text-sm font-bold mb-2">Produto:</label>
+                                <select name="itens[<%= index %>][ProdutoID]" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                                    <option value="<%= item.Produto.ProdutoID %>"><%= item.Produto.Nome %></option>
+                                    <% produtos.forEach(produto => { %>
+                                        <% if (produto.ProdutoID !== item.Produto.ProdutoID) { %>
+                                            <option value="<%= produto.ProdutoID %>"><%= produto.Nome %></option>
+                                        <% } %>
+                                    <% }); %>
+                                </select>
+                            </div>
+                            <div class="mb-2">
+                                <label class="block text-gray-700 text-sm font-bold mb-2">Quantidade:</label>
+                                <input type="number" name="itens[<%= index %>][Quantidade]" value="<%= item.Quantidade %>" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                            </div>
+                            <button type="button" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700 remove-item">Remover</button>
+                        </div>
+                    <% }) %>
+                </div>
+                <!-- Botão para adicionar novos itens -->
+                <button type="button" id="add-item" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">Adicionar Item</button>
+            </div>
+            <!-- Botões de ação -->
+            <div class="flex items-center justify-end">
+                <a href="/vendas"><button type="button" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Voltar</button></a>
+                <button type="submit" style="margin-left: 10px;" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Atualizar venda</button>
+            </div>
+        </form>
+    </div>
+</main>
+
+<script>
+    document.getElementById('add-item').addEventListener('click', function () {
+        const container = document.getElementById('itens-container');
+        const index = container.children.length;
+        const newItem = document.createElement('div');
+        newItem.classList.add('mb-4', 'p-4', 'border', 'rounded', 'shadow-sm', 'bg-gray-50', 'item-vendido');
+        newItem.innerHTML = `
+            <div class="mb-2">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Produto:</label>
+                <select name="itens[${index}][ProdutoID]" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                    <option value="">Selecione um produto</option>
+                    <% produtos.forEach(produto => { %>
+                        <option value="<%= produto.ProdutoID %>"><%= produto.Nome %></option>
+                    <% }); %>
+                </select>
+            </div>
+            <div class="mb-2">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Quantidade:</label>
+                <input type="number" name="itens[${index}][Quantidade]" placeholder="Quantidade" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+            </div>
+            <button type="button" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700 remove-item">Remover</button>
+        `;
+        container.appendChild(newItem);
+    });
+
+    document.addEventListener('click', function (event) {
+        if (event.target.classList.contains('remove-item')) {
+            const container = document.getElementById('itens-container');
+            if (container.children.length > 1) {
+                event.target.closest('.item-vendido').remove();
+            } else {
+                alert('Não é possível remover o único item da venda.');
+            }
+        }
+    });
+</script>

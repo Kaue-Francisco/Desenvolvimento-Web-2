@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { VendaType } from '../../interfaces/vendasInterface'
+import { VendaType, AtualizarVenda } from '../../interfaces/vendasInterface';
 
 const prisma = new PrismaClient();
 
@@ -8,10 +8,10 @@ export class VendasService {
     async buscarVendas() {
         const vendas = await prisma.venda.findMany({
             include: {
-                Cliente: true, // Inclui dados do cliente
+                Cliente: true,
                 ItensVendidos: {
                     include: {
-                        Produto: true, // Inclui dados do produto
+                        Produto: true,
                     },
                 },
             },
@@ -21,7 +21,6 @@ export class VendasService {
     }
 
     async realizarVenda(venda: VendaType) {
-        
         const vendaRealizada = await prisma.venda.create({
             data: {
                 ClienteID: venda.cliente,
@@ -36,6 +35,8 @@ export class VendasService {
                 },
             }
         });
+
+        return vendaRealizada;
     }
 
     async deletarVenda(vendaID: number) {
@@ -58,19 +59,16 @@ export class VendasService {
     }
 
     async atualizarTotalVenda(vendaID: number) {
-        // Atualiza o preço total da venda.
         const itensVendidos = await prisma.itensVendidos.findMany({
             where: {
                 VendaID: vendaID
             }
         });
 
-        // Calcula o novo total da venda.
         const novoTotal = itensVendidos.reduce((total, item) => {
             return total + item.PrecoUnitario * item.Quantidade;
         }, 0);
 
-        // Atualiza o total da venda.
         await prisma.venda.update({
             where: {
                 VendaID: vendaID
@@ -79,5 +77,71 @@ export class VendasService {
                 ValorTotal: novoTotal
             }
         });
+    }
+
+    async buscarVendaUnica(vendaID: number) {
+        const venda = await prisma.venda.findUnique({
+            where: {
+                VendaID: vendaID
+            },
+            include: {
+                Cliente: true,
+                ItensVendidos: {
+                    include: {
+                        Produto: true
+                    }
+                }
+            }
+        });
+
+        return venda;
+    }
+
+    async atualizarVenda(venda: AtualizarVenda) {
+        try {
+            // Atualiza os dados da venda
+            await prisma.venda.update({
+                where: {
+                    VendaID: venda.VendaID
+                },
+                data: {
+                    ClienteID: venda.ClienteID,
+                    DataVenda: new Date(venda.DataVenda),
+                }
+            });
+
+            // Deleta os itens vendidos antigos
+            await prisma.itensVendidos.deleteMany({
+                where: {
+                    VendaID: venda.VendaID
+                }
+            });
+
+            // Adiciona os novos itens vendidos com o preço unitário correto
+            const novosItensVendidos = await Promise.all(venda.itens.map(async (item) => {
+                const produto = await prisma.produto.findUnique({
+                    where: {
+                        ProdutoID: item.ProdutoID
+                    }
+                });
+
+                return {
+                    VendaID: venda.VendaID,
+                    ProdutoID: item.ProdutoID,
+                    Quantidade: item.Quantidade,
+                    PrecoUnitario: produto?.Preco ?? 0
+                };
+            }));
+
+            await prisma.itensVendidos.createMany({
+                data: novosItensVendidos
+            });
+
+            // Atualiza o valor total da venda
+            await this.atualizarTotalVenda(venda.VendaID);
+        } catch (error) {
+            console.error('Erro ao atualizar venda:', error);
+            throw error;
+        }
     }
 }

@@ -155,6 +155,25 @@ router.route('/deletarVenda')
         res.redirect('/vendas');
     });
 
+router.route('/atualizarVenda/:id')
+    .get(async (req: Request, res: Response) => {
+        const venda = await vendasController.buscarVendaUnica(parseInt(req.params.id));
+        const clientes = await clienteController.buscarClientes();
+        const produtos = await produtoController.pegarProdutos();
+        res.render('vendas/atualizarVenda', { venda: venda, clientes: clientes, produtos: produtos});
+    })
+    .post(async (req: Request, res: Response) => {
+        const venda = req.body;
+        venda.ClienteID = parseInt(venda.ClienteID);
+        venda.VendaID = parseInt(req.params.id);
+        for (let i = 0; i < venda.itens.length; i++) {
+            venda.itens[i].ProdutoID = parseInt(venda.itens[i].ProdutoID);
+            venda.itens[i].Quantidade = parseInt(venda.itens[i].Quantidade);
+        }
+        await vendasController.atualizarVenda(venda);
+        res.redirect('/vendas');
+    })
+
 //////////////////////////////////////////////////////////////////////////////
 
 export default router;

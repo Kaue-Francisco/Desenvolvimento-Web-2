@@ -28,16 +28,16 @@
             <tbody class="divide-y divide-gray-200">
                 <% data.forEach(venda => { %>
                     <tr class="hover:bg-gray-50">
-                        <td class="px-6 py-4 whitespace-nowrap"><%= venda.Cliente.Nome %></td>
-                        <td class="px-6 py-4 whitespace-nowrap"><%= new Date(venda.DataVenda).toLocaleDateString() %></td>
+                        <td class="px-6 py-4 whitespace-nowrap"><a href="/atualizarVenda/<%= venda.VendaID %>"><%= venda.Cliente.Nome %></a></td>
+                        <td class="px-6 py-4 whitespace-nowrap"><a href="/atualizarVenda/<%= venda.VendaID %>"><%= new Date(venda.DataVenda).toLocaleDateString() %></a></td>
                         <td class="px-6 py-4">
                             <ul class="list-disc list-inside">
                                 <% venda.ItensVendidos.forEach(item => { %>
-                                    <li><%= item.Produto.Nome %> - Quantidade: <%= item.Quantidade %> - Preço Unitário: R$<%= item.PrecoUnitario %></li>
+                                    <li><a href="/atualizarVenda/<%= venda.VendaID %>"><%= item.Produto.Nome %> - Quantidade: <%= item.Quantidade %> - Preço Unitário: R$<%= item.PrecoUnitario %></a></li>
                                 <% }) %>
                             </ul>
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap">R$ <%= venda.ValorTotal %></td>
+                        <td class="px-6 py-4 whitespace-nowrap"><a href="/atualizarVenda/<%= venda.VendaID %>"></a>R$ <%= venda.ValorTotal %></a></td>
                     </tr>
                 <% }) %>
             </tbody>

@@ -1,6 +1,6 @@
 import { VendasService } from '../../service/vendas/vendasService';
 import { ProdutoController } from '../produto/produtoController';
-import { VendaType } from '../../interfaces/vendasInterface';
+import { VendaType, AtualizarVenda } from '../../interfaces/vendasInterface';
 
 const vendasService = new VendasService();
 const produtoController = new ProdutoController();
@@ -43,6 +43,24 @@ export class VendasController {
     async deletarVenda(vendaID: number) {
         try {
             await vendasService.deletarVenda(vendaID);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async buscarVendaUnica(vendaID: number) {
+        try {
+            const venda = await vendasService.buscarVendaUnica(vendaID);
+            return venda;
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async atualizarVenda(venda: AtualizarVenda) {
+        try {
+            
+            await vendasService.atualizarVenda(venda);
         } catch (error) {
             console.error(error);
         }
