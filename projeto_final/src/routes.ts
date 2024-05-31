@@ -42,7 +42,6 @@ router.route('/adicionarProduto')
 router.route('/deletarProduto')
     .get(async (req: Request, res: Response) => {
         const produtos = await produtoController.pegarProdutos();
-        console.log(produtos)
         res.render('produtos/deletarProduto', { data: produtos });
     })
     .post(async (req: Request, res: Response) => {
@@ -60,7 +59,6 @@ router.route('/atualizarProduto/:id')
     .post(async (req: Request, res: Response) => {
         const produto = req.body;
         produto.ProdutoID = parseInt(produto.ProdutoID);
-        console.log(produto)
        await produtoController.atualizarProduto(produto);
         res.redirect('/produtos');
     });
