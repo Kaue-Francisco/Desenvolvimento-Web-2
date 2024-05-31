@@ -47,4 +47,21 @@ export class ProdutoController {
             console.error(error);
         }
     }
+
+    async pegarProdutoUnico(produtoID: number) {
+        try {
+            const produto = await produtoService.pegarProdutoUnico(produtoID);
+            return produto;
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async atualizarProduto(produto: produtoType) {
+        try {
+            await produtoService.atualizarProduto(produto);
+        } catch (error) {
+            console.error(error);
+        }
+    }
 }

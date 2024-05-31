@@ -1,39 +1,55 @@
 <main style="min-height: 92vh;" class="bg-gray-100 p-8">
-        <div class="flex justify-between items-center mb-8">
-            <h1 class="text-3xl font-bold">Clientes</h1>
-            <div class="flex space-x-4">
-                <a href="/adicionarCliente">
-                    <button class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700">
-                        Cadastrar Cliente
-                    </button>
-                </a>
-                <a href="/deletarCliente">
-                    <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700">
-                        Deletar Cliente
-                    </button>
-                </a>
-            </div>
+    <div class="flex justify-between items-center mb-8">
+        <h1 class="text-3xl font-bold">Clientes</h1>
+        <div class="flex space-x-4">
+            <a href="/adicionarCliente">
+                <button class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700">
+                    Cadastrar Cliente
+                </button>
+            </a>
+            <a href="/deletarCliente">
+                <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700">
+                    Deletar Cliente
+                </button>
+            </a>
         </div>
-        <div class="overflow-x-auto">
-            <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
-                <thead class="bg-gray-800 text-white">
-                    <tr>
-                        <th class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">Nome</th>
-                        <th class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">Email</th>
-                        <th class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">Telefone</th>
-                        <th class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">Endereço</th>
+    </div>
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+            <thead class="bg-gray-800 text-white">
+                <tr>
+                    <th class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">Nome</th>
+                    <th class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">Email</th>
+                    <th class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">Telefone</th>
+                    <th class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">Endereço</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+                <% data.forEach(cliente => { %>
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <a href="/atualizarCliente/<%= cliente.ClienteID %>" class="block">
+                                <%= cliente.Nome %>
+                            </a>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <a href="/atualizarCliente/<%= cliente.ClienteID %>" class="block">
+                                <%= cliente.Email %>
+                            </a>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <a href="/atualizarCliente/<%= cliente.ClienteID %>" class="block">
+                                <%= cliente.Telefone %>
+                            </a>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <a href="/atualizarCliente/<%= cliente.ClienteID %>" class="block">
+                                <%= cliente.Endereco %>
+                            </a>
+                        </td>
                     </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-200">
-                    <% data.forEach(cliente => { %>
-                        <tr class="hover:bg-gray-50">
-                            <td class="px-6 py-4 whitespace-nowrap"><%= cliente.Nome %></td>
-                            <td class="px-6 py-4 whitespace-nowrap"><%= cliente.Email %></td>
-                            <td class="px-6 py-4 whitespace-nowrap"><%= cliente.Telefone%></td>
-                            <td class="px-6 py-4 whitespace-nowrap"><%= cliente.Endereco %></td>
-                        </tr>
-                    <% }) %>
-                </tbody>
-            </table>
-        </div>
-    </main>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</main>

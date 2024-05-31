@@ -51,6 +51,20 @@ router.route('/deletarProduto')
         res.redirect('/produtos');
     });
 
+router.route('/atualizarProduto/:id')
+    .get(async (req: Request, res: Response) => {
+        const produto = await produtoController.pegarProdutoUnico(parseInt(req.params.id));
+        res.render('produtos/atualizarProduto', { produto: produto });
+    })
+
+    .post(async (req: Request, res: Response) => {
+        const produto = req.body;
+        produto.ProdutoID = parseInt(produto.ProdutoID);
+        console.log(produto)
+       await produtoController.atualizarProduto(produto);
+        res.redirect('/produtos');
+    });
+
 //////////////////////////////////////////////////////////////////////////////
 
 // CLIENTES
@@ -78,6 +92,19 @@ router.route('/deletarCliente')
     .post(async (req: Request, res: Response) => {
         const { clienteID } = req.body; // Change to use body instead of params
         await clienteController.deletarCliente(parseInt(clienteID)); // Assuming a deletarCliente method exists in ClienteController
+        res.redirect('/clientes');
+    });
+
+router.route('/atualizarCliente/:id')
+    .get(async (req: Request, res: Response) => {
+        const cliente = await clienteController.buscarClienteUnico(parseInt(req.params.id));
+        res.render('clientes/atualizarCliente', { cliente: cliente });
+    })
+
+    .post(async (req: Request, res: Response) => {
+        const cliente = req.body;
+        cliente.ClienteID = parseInt(cliente.ClienteID);
+        await clienteController.atualizarCliente(cliente);
         res.redirect('/clientes');
     });
 

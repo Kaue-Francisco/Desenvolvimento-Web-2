@@ -18,6 +18,16 @@ export class ClienteController {
             console.error(error);
         }
     }
+
+    async buscarClienteUnico(clienteID: number) {
+        try {
+            const clientes = await clienteService.buscarClienteUnico(clienteID);
+            
+            return clientes;
+        } catch (error) {
+            console.error(error);
+        }
+    }
     
     async adicionarCliente(cliente: clienteType) {
         try {
@@ -37,6 +47,14 @@ export class ClienteController {
     async deletarCliente(clienteID: number) {
         try {
             await clienteService.deletarCliente(clienteID);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async atualizarCliente(cliente: clienteType) {
+        try {
+            await clienteService.atualizarCliente(cliente);
         } catch (error) {
             console.error(error);
         }

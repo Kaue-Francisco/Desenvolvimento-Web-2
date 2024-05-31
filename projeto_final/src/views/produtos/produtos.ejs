@@ -30,7 +30,11 @@
             <tbody class="divide-y divide-gray-200">
                 <% data.forEach(function(item) { %>
                     <tr class="hover:bg-gray-50">
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"><%= item.Nome %></td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                            <a href="/atualizarProduto/<%= item.ProdutoID %>" class="block">
+                                <%= item.Nome %>
+                            </a>
+                        </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">R$ <%= item.Preco %></td>
                     </tr>
                 <% }); %>

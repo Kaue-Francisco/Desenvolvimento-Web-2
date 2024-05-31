@@ -1,7 +1,10 @@
 import { PrismaClient } from '@prisma/client';
 import { produtoType } from "../../interfaces/produtoInterface";
+import { VendasService } from '../vendas/vendasService';
+
 
 const prisma = new PrismaClient();
+const vendasService = new VendasService
 
 export class ProdutoService {
 
@@ -85,27 +88,7 @@ export class ProdutoService {
                     }
                 });
 
-                // Atualiza o preço total da venda.
-                const itensVendidos = await prisma.itensVendidos.findMany({
-                    where: {
-                        VendaID: vendaID
-                    }
-                });
-
-                // Calcula o novo total da venda.
-                const novoTotal = itensVendidos.reduce((total, item) => {
-                    return total + item.PrecoUnitario * item.Quantidade;
-                }, 0);
-
-                // Atualiza o total da venda.
-                await prisma.venda.update({
-                    where: {
-                        VendaID: vendaID
-                    },
-                    data: {
-                        ValorTotal: novoTotal
-                    }
-                });
+                await vendasService.atualizarTotalVenda(vendaID);
             }
         }
 
@@ -116,4 +99,52 @@ export class ProdutoService {
             }
         });
     }
+
+    async pegarProdutoUnico(produtoID: number) {
+        // Retorna um produto específico.
+        return prisma.produto.findUnique({
+            where: {
+                ProdutoID: produtoID
+            }
+        });
+    }
+
+    async atualizarProduto(produto: produtoType) {
+        // Converte o preço para um número.
+        const novoPreco = parseFloat(produto.Preco);
+    
+        // Atualiza o preço do produto em todos os itens vendidos que o contêm.
+        await prisma.itensVendidos.updateMany({
+            where: {
+                ProdutoID: produto.ProdutoID
+            },
+            data: {
+                PrecoUnitario: novoPreco
+            }
+        });
+    
+        // Atualiza o preço do produto em todas as vendas que o contêm.
+        const vendasAssociadas = await prisma.itensVendidos.findMany({
+            where: {
+                ProdutoID: produto.ProdutoID
+            },
+            distinct: ['VendaID']
+        });
+    
+        for (const venda of vendasAssociadas) {
+            await vendasService.atualizarTotalVenda(venda.VendaID);
+        }
+    
+        // Atualiza o produto com o novo nome e preço.
+        return prisma.produto.update({
+            where: {
+                ProdutoID: produto.ProdutoID
+            },
+            data: {
+                Nome: produto.Nome,
+                Preco: novoPreco
+            }
+        });
+    }
+    
 }

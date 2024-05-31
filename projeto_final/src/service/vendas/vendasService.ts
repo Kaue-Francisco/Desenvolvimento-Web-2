@@ -56,4 +56,28 @@ export class VendasService {
             throw error;
         }
     }
+
+    async atualizarTotalVenda(vendaID: number) {
+        // Atualiza o preço total da venda.
+        const itensVendidos = await prisma.itensVendidos.findMany({
+            where: {
+                VendaID: vendaID
+            }
+        });
+
+        // Calcula o novo total da venda.
+        const novoTotal = itensVendidos.reduce((total, item) => {
+            return total + item.PrecoUnitario * item.Quantidade;
+        }, 0);
+
+        // Atualiza o total da venda.
+        await prisma.venda.update({
+            where: {
+                VendaID: vendaID
+            },
+            data: {
+                ValorTotal: novoTotal
+            }
+        });
+    }
 }

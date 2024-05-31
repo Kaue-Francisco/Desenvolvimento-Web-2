@@ -1,17 +1,28 @@
-import { PrismaClient } from '@prisma/client'; // Add the missing import statement for 'vendaItem' model
+import { PrismaClient } from '@prisma/client';
 import { clienteType } from '../../interfaces/clienteInterface';
 
 const prisma = new PrismaClient();
 
 export class ClienteService {
-    
+
     async buscarClientes() {
-    // Retorna todos os clientes   
+        // Retorna todos os clientes   
         return prisma.cliente.findMany();
     }
-    
+
+    async buscarClienteUnico(clienteID: number) {
+        // Retorna um cliente específico
+        const cliente = await prisma.cliente.findUnique({
+            where: { ClienteID: clienteID }
+        });
+        if (cliente === null) {
+            return {};
+        }
+        return cliente;
+    }
+
     async adicionarCliente(cliente: clienteType) {
-    // Adiciona um cliente
+        // Adiciona um cliente
         return prisma.cliente.create({
             data: {
                 Nome: cliente.Nome,
@@ -33,13 +44,13 @@ export class ClienteService {
                 }
             });
 
-            // Deleta os registros dependentes primeiro, se necessário
+            // Deleta os registros de venda associados
             await prisma.venda.deleteMany({
                 where: {
                     ClienteID: clienteID
                 }
             });
-    
+
             // Agora, deletar o cliente
             return await prisma.cliente.delete({
                 where: {
@@ -48,6 +59,26 @@ export class ClienteService {
             });
         } catch (error) {
             console.error('Erro ao deletar cliente:', error);
+            throw error;
+        }
+    }
+
+    async atualizarCliente(cliente: clienteType) {
+        try {
+            // Atualizar o cliente diretamente
+            return await prisma.cliente.update({
+                where: {
+                    ClienteID: cliente.ClienteID
+                },
+                data: {
+                    Nome: cliente.Nome,
+                    Email: cliente.Email,
+                    Telefone: cliente.Telefone,
+                    Endereco: cliente.Endereco
+                }
+            });
+        } catch (error) {
+            console.error('Erro ao atualizar cliente:', error);
             throw error;
         }
     }

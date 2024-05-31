@@ -41,7 +41,7 @@ export async function gerarDados() {
         data: [
             { ClienteID: cliente1.ClienteID, DataVenda: new Date('2024-05-28'), ValorTotal: 30.00 },
             { ClienteID: cliente2.ClienteID, DataVenda: new Date('2024-05-28'), ValorTotal: 35.00 },
-            { ClienteID: cliente3.ClienteID, DataVenda: new Date('2024-05-29'), ValorTotal: 15.00 },
+            { ClienteID: cliente3.ClienteID, DataVenda: new Date('2024-05-29'), ValorTotal: 10.00 },
             { ClienteID: cliente4.ClienteID, DataVenda: new Date('2024-05-29'), ValorTotal: 50.00 }
         ]
     });
