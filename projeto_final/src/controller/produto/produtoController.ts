@@ -53,7 +53,7 @@ export class ProdutoController {
             const produto = await produtoService.pegarProdutoUnico(produtoID);
             return produto;
         } catch (error) {
-            console.error(error);
+            //console.error(error);
         }
     }
 

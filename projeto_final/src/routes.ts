@@ -53,13 +53,15 @@ router.route('/deletarProduto')
 router.route('/atualizarProduto/:id')
     .get(async (req: Request, res: Response) => {
         const produto = await produtoController.pegarProdutoUnico(parseInt(req.params.id));
-        res.render('produtos/atualizarProduto', { produto: produto });
+        if (!produto) {
+            return res.status(404).send('Produto não encontrado');
+        }
+        res.render('produtos/atualizarProduto', { produto });
     })
-
     .post(async (req: Request, res: Response) => {
         const produto = req.body;
         produto.ProdutoID = parseInt(produto.ProdutoID);
-       await produtoController.atualizarProduto(produto);
+        await produtoController.atualizarProduto(produto);
         res.redirect('/produtos');
     });
 

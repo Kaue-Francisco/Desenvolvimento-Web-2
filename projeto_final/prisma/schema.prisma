@@ -11,6 +11,7 @@ model Produto {
   ProdutoID  Int      @id @default(autoincrement())
   Nome       String   @unique
   Preco      Float
+  ativo      Boolean  @default(true)
   ItensVendidos ItensVendidos[]
 }
 
